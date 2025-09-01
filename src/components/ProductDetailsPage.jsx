@@ -1,6 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetailsPage = ({
   currentProduct,
@@ -9,6 +10,7 @@ const ProductDetailsPage = ({
   addToCart,
 }) => {
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
 
   const increaseQuantity = () => setQuantity((prev) => prev + 1);
   const decreaseQuantity = () =>
@@ -35,7 +37,8 @@ const ProductDetailsPage = ({
 
   const handleBuyNow = () => {
     addToCart(currentProduct, quantity);
-    setCurrentPage("cart");
+    // setCurrentPage("cart");
+    navigate("/cart")
   };
 
   const goBackToProducts = () => {

@@ -1,9 +1,10 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import ImageCarousel from "./ImageCarousel";
+import { useNavigate } from "react-router-dom";  
 
 const CategoriesPage = ({ setCurrentPage, setCurrentCategory }) => {
-  const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate(); // ✅ initialize navigation
 
   const categories = [
     {
@@ -47,15 +48,9 @@ const CategoriesPage = ({ setCurrentPage, setCurrentCategory }) => {
 
   const handleCategoryClick = (categoryId) => {
     setCurrentCategory(categoryId);
-    setCurrentPage("products");
+    navigate("/products");
   };
 
-
-  const closeModal = () => setShowModal(false);
-
-  const showNewProducts = () => {
-    closeModal();
-  };
 
   const showTrendingProducts = () => {
     alert("🔥 Trending products feature coming soon!");
@@ -82,7 +77,7 @@ const CategoriesPage = ({ setCurrentPage, setCurrentCategory }) => {
       </div>
 
       <div>
-        <ImageCarousel/>
+        <ImageCarousel />
       </div>
 
       {/* Categories */}
@@ -168,34 +163,20 @@ const CategoriesPage = ({ setCurrentPage, setCurrentCategory }) => {
             View Trending Products
           </button>
         </div>
-      </div>
 
-      {/* Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 text-center">
-            <div className="text-6xl mb-4">🎉</div>
-            <h3 className="text-2xl font-bold mb-4">Welcome Back!</h3>
-            <p className="text-gray-600 mb-6">
-              We've added new products since your last visit. Check them out!
-            </p>
-            <div className="flex space-x-4">
-              <button
-                onClick={closeModal}
-                className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold"
-              >
-                Maybe Later
-              </button>
-              <button
-                onClick={showNewProducts}
-                className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold"
-              >
-                Show Me!
-              </button>
-            </div>
-          </div>
+        {/* Hanging Button */}
+        <div className="fixed top-1/2 right-0 transform -translate-y-1/2 z-50">
+          <button
+            onClick={() => navigate("/lifestyle")}
+            className="bg-orange-500 text-white px-4 py-2 rounded-l-full shadow-lg hover:bg-orange-700 transition-all"
+          >
+            🛒 Shop
+          </button>
         </div>
-      )}
+
+
+
+      </div>
     </div>
   );
 };

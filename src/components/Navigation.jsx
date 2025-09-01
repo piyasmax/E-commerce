@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart } from "lucide-react"; // modern icon
+import { useNavigate } from "react-router-dom"; // ✅ import navigate hook
 
 const Navigation = ({ currentPage, setCurrentPage, cartCount }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate(); // ✅ initialize navigation
 
   const pages = ["home", "categories"];
 
@@ -17,7 +19,7 @@ const Navigation = ({ currentPage, setCurrentPage, cartCount }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            onClick={() => setCurrentPage("home")}
+            onClick={() => navigate("/")} // ✅ navigate to categories
             className="text-2xl font-extrabold text-white tracking-wide cursor-pointer"
           >
             <span className="bg-gray-50 bg-clip-text text-transparent">
@@ -46,7 +48,7 @@ const Navigation = ({ currentPage, setCurrentPage, cartCount }) => {
             {/* Cart */}
             <motion.button
               whileHover={{ scale: 1.05 }}
-              onClick={() => setCurrentPage("cart")}
+               onClick={() => navigate("/cart")} // ✅ navigate to categories
               className="relative flex items-center gap-2 bg-white text-orange-600 px-5 py-2 rounded-full font-semibold shadow-md hover:bg-yellow-100 transition-all"
             >
               <ShoppingCart className="w-5 h-5" />

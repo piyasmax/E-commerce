@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import products from '../data/products.js';
+import { useNavigate } from "react-router-dom";
 
 const ProductsPage = ({ currentCategory, setCurrentPage, setCurrentProduct }) => {
   const categoryNames = {
@@ -13,6 +14,7 @@ const ProductsPage = ({ currentCategory, setCurrentPage, setCurrentProduct }) =>
   const [wishlist, setWishlist] = useState([]);
   const [notification, setNotification] = useState({ message: '', show: false });
   const [displayedProducts, setDisplayedProducts] = useState([]);
+  const navigate = useNavigate();
 
   // Initialize products with validation
   useEffect(() => {
@@ -44,7 +46,8 @@ const ProductsPage = ({ currentCategory, setCurrentPage, setCurrentProduct }) =>
   // Navigation handler
   const handleProductClick = (product) => {
     setCurrentProduct(product);
-    setCurrentPage('product-details');
+    // setCurrentPage('product-details');
+    navigate("/product-details")
     showNotification('Opening product details...');
   };
 

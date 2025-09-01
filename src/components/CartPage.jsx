@@ -1,18 +1,22 @@
 import { ShoppingCart, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = ({ cart, setCurrentPage, updateCartQuantity, removeFromCart }) => {
   const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const navigate = useNavigate();
 
   const handleCheckout = () => {
     if (cart.length === 0) {
       alert('Your cart is empty!');
       return;
     }
-    setCurrentPage('checkout');
+    // setCurrentPage('checkout');
+    navigate("/checkout")
   };
 
   const goBackToProducts = () => {
-    setCurrentPage('product-details');
+    // setCurrentPage('product-details');
+    navigate("/product-details")
   };
 
   return (

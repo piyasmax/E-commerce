@@ -5,12 +5,43 @@ import hero1 from "../assets/img/hero.jpg";
 import hero2 from "../assets/img/hero2.jpg";
 import hero3 from "../assets/img/hero3.jpg";
 // import { BarrelIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom"; // ✅ import navigate hook
 
 const HomePage = ({ setCurrentPage, setCurrentCategory }) => {
   const [bgPos, setBgPos] = useState(0);
   const [direction, setDirection] = useState(1);
   const heroImages = [hero1, hero2, hero3];
   const [currentIndex, setCurrentIndex] = useState(0);
+  // Brand name typing effect
+  const brandTexts = ["UPODHOUKON", "উপঢৌকন", "उपढौकन"];
+  const [brand, setBrand] = useState("");
+  const [brandIndex, setBrandIndex] = useState(0);
+  const [brandCharIndex, setBrandCharIndex] = useState(0);
+  const [brandDeleting, setBrandDeleting] = useState(false);
+  const navigate = useNavigate(); // ✅ initialize navigation
+
+  useEffect(() => {
+    const currentBrand = brandTexts[brandIndex];
+    let timer;
+    if (!brandDeleting && brandCharIndex < currentBrand.length) {
+      timer = setTimeout(() => {
+        setBrand((prev) => prev + currentBrand[brandCharIndex]);
+        setBrandCharIndex((prev) => prev + 1);
+      }, 120);
+    } else if (brandDeleting && brandCharIndex > 0) {
+      timer = setTimeout(() => {
+        setBrand(currentBrand.substring(0, brandCharIndex - 1));
+        setBrandCharIndex((prev) => prev - 1);
+      }, 80);
+    } else if (!brandDeleting && brandCharIndex === currentBrand.length) {
+      timer = setTimeout(() => setBrandDeleting(true), 2000);
+    } else if (brandDeleting && brandCharIndex === 0) {
+      setBrandDeleting(false);
+      setBrandIndex((prev) => (prev + 1) % brandTexts.length);
+    }
+    return () => clearTimeout(timer);
+  }, [brandCharIndex, brandDeleting, brandIndex]);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -143,7 +174,8 @@ const HomePage = ({ setCurrentPage, setCurrentCategory }) => {
             <span style={shimmerStyle} className="block mb-1 sm:mb-2">
               Discover Great Deals
             </span>
-            <span className="text-white block">at UPODHOUKON</span>
+            {/* <span className="text-white block">at UPODHOUKON</span> */}
+            <span className="text-white block">at {brand}</span>
           </h1>
 
           {/* Subtitle */}
@@ -155,7 +187,7 @@ const HomePage = ({ setCurrentPage, setCurrentCategory }) => {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 w-full sm:w-auto">
             <motion.button
               whileTap={{ scale: 0.95 }}
-              onClick={() => setCurrentPage("categories")}
+              onClick={() => navigate("/categories")} // ✅ navigate to categories
               className="bg-white text-orange-700 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 shadow-xl animate-[pulse-glow_2s_ease-in-out_infinite]"
             >
               🚀 Explore Now
@@ -212,65 +244,6 @@ const HomePage = ({ setCurrentPage, setCurrentCategory }) => {
           </div>
         </div>
       </motion.div>
-
-
-      {/* Features Section */}
-      {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-10">
-        {[
-          {
-            icon: "🌱",
-            title: "100% Sustainable",
-            desc: "Eco-conscious products for a better tomorrow",
-            badge: "✓ Verified Eco-Friendly",
-            badgeColor: "text-green-600",
-          },
-          {
-            icon: "🚚",
-            title: "Lightning Fast",
-            desc: "Same-day delivery in major cities",
-            badge: "⚡ 2-Hour Express",
-            badgeColor: "text-blue-600",
-          },
-          {
-            icon: "💎",
-            title: "Premium Quality",
-            desc: "Handpicked products, tested for excellence",
-            badge: "🏆 Award Winning",
-            badgeColor: "text-purple-600",
-          },
-          {
-            icon: "🎯",
-            title: "Best Deals",
-            desc: "Unbeatable prices, guaranteed savings",
-            badge: "💰 Up to 70% Off",
-            badgeColor: "text-orange-600",
-          },
-        ].map((item, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ scale: 1.02, y: -8, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
-            className="bg-white p-6 rounded-2xl shadow-lg text-center transition-all duration-300"
-          >
-            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center text-3xl">
-              {item.icon}
-            </div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">{item.title}</h3>
-            <p className="text-sm text-gray-600">{item.desc}</p>
-            <div className={`mt-3 text-xs font-semibold ${item.badgeColor}`}>{item.badge}</div>
-          </motion.div>
-        ))}
-      </div> */}
-
-      {/* Categories */}
-      {/* < div className="bg-white rounded-lg shadow-lg p-6 mt-10" >
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
-          Shop by Category
-        </h2>
-        <Categories
-          setCurrentPage={setCurrentPage}
-          setCurrentCategory={setCurrentCategory}
-        />
-      </div> */}
     </div>
   );
 };

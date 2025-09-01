@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const OrderConfirmationPage = ({ setCurrentPage, clearCart }) => {
   const [orderNumber] = useState('ECO' + Math.random().toString(36).substr(2, 9).toUpperCase());
+  const navigate = useNavigate();
 
   useEffect(() => {
     clearCart();
@@ -17,8 +19,8 @@ const OrderConfirmationPage = ({ setCurrentPage, clearCart }) => {
           <p className="text-green-800">Order #{orderNumber}</p>
           <p className="text-green-600">Estimated delivery: 3-5 business days</p>
         </div>
-        <button 
-          onClick={() => setCurrentPage('home')} 
+        <button
+          onClick={() => navigate('/')}
           className="bg-green-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-green-700 transform hover:scale-105 transition-all"
         >
           Continue Shopping
