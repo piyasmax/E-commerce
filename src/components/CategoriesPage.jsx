@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
 import ImageCarousel from "./ImageCarousel";
-import { useNavigate } from "react-router-dom";  
+import { useNavigate } from "react-router-dom";
+import hero1 from '../assets/img/hero.jpg';
+import hero2 from '../assets/img/hero2.jpg';
+import hero3 from '../assets/img/hero3.jpg';
 
 const CategoriesPage = ({ setCurrentPage, setCurrentCategory }) => {
+
+  const heroimg =[hero1,hero2,hero3]
 
   const navigate = useNavigate(); // ✅ initialize navigation
 
@@ -77,7 +82,7 @@ const CategoriesPage = ({ setCurrentPage, setCurrentCategory }) => {
       </div>
 
       <div>
-        <ImageCarousel />
+        <ImageCarousel images={heroimg} />
       </div>
 
       {/* Categories */}

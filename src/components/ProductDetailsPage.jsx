@@ -42,7 +42,8 @@ const ProductDetailsPage = ({
   };
 
   const goBackToProducts = () => {
-    setCurrentPage("products");
+    // setCurrentPage("products");
+    navigate('/products')
   };
 
   if (!currentProduct) return null;

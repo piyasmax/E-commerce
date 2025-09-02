@@ -17,14 +17,31 @@ const ProductsPage = ({ currentCategory, setCurrentPage, setCurrentProduct }) =>
   const navigate = useNavigate();
 
   // Initialize products with validation
+  // useEffect(() => {
+  //   if (products[currentCategory] && Array.isArray(products[currentCategory])) {
+  //     setDisplayedProducts(products[currentCategory]);
+  //   } else {
+  //     setDisplayedProducts([]);
+  //     showNotification(`No products found for category: ${currentCategory}`);
+  //   }
+  // }, [currentCategory]);
   useEffect(() => {
-    if (products[currentCategory] && Array.isArray(products[currentCategory])) {
-      setDisplayedProducts(products[currentCategory]);
+    const categoryData = products[currentCategory];
+
+    if (Array.isArray(categoryData)) {
+      // Normal category (array of products)
+      setDisplayedProducts(categoryData);
+    } else if (categoryData && typeof categoryData === "object") {
+      // Nested categories (object of arrays)
+      const mergedProducts = Object.values(categoryData).flat();
+      setDisplayedProducts(mergedProducts);
     } else {
+      // No products found
       setDisplayedProducts([]);
       showNotification(`No products found for category: ${currentCategory}`);
     }
   }, [currentCategory]);
+
 
   // Notification handler
   const showNotification = (message) => {
@@ -121,7 +138,8 @@ const ProductsPage = ({ currentCategory, setCurrentPage, setCurrentProduct }) =>
               <div className="flex items-center space-x-4">
                 <button
                   onClick={() => {
-                    setCurrentPage('categories');
+                    // setCurrentPage('categories');
+                    navigate('/categories')
                     showNotification('Going back to categories...');
                   }}
                   className="flex items-center text-orange-700 hover:text-orange-800 font-medium"
