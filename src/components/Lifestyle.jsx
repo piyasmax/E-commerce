@@ -118,7 +118,7 @@ const Lifestyle = ({ setCurrentPage, setCurrentCategory }) => {
               transition={{ duration: 1 }}
               className="absolute text-white drop-shadow-lg"
             >
-              👗 Lifestyle Fashion
+              UPODHOUKON
             </motion.div>
           </motion.div>
         )}
@@ -233,12 +233,12 @@ const Lifestyle = ({ setCurrentPage, setCurrentCategory }) => {
             </div>
 
             {/* Floating Shop Button */}
-            <div className="fixed top-1/2 right-0 transform -translate-y-1/2 z-50">
+            <div className="fixed top-10/11 right-1 transform -translate-y-1/2 z-50">
               <button
                 onClick={() => navigate("/categories")}
-                className="bg-pink-600 text-white px-4 py-2 rounded-l-full shadow-lg hover:bg-pink-800 transition-all"
+                className="bg-pink-600 text-white px-3 py-4 rounded-full shadow-lg hover:bg-pink-800 transform hover:scale-110 transition-transform duration-300"
               >
-                🛍️ Shop
+                Shop
               </button>
             </div>
           </div>
